@@ -165,7 +165,21 @@ class ApiPush extends ApiBase {
 			}
 		}
 		else {
-			$this->dieUsage( wfMsgExt( 'push-err-authentication', 'parsemag', $target, '' ), 'authentication-failed' );
+			$errmsg=$target;
+			$errors=$status->getErrorsArray();
+			$errcount=count($errors);
+			if ($errcount>0) {
+			  $errmsg.="("; // prepare a list of explanations from the errors
+			  $delim=""; 
+			  foreach($errors as $error) {
+			  	// reverse engineered - but what would be the polite way?
+				$errtext=$error[0].":".$error[1];
+				$errmsg.=$delim.$errtext;
+				$delim=", ";
+			  }
+			  $errmsg.=")";
+			}
+			$this->dieUsage( wfMsgExt( 'push-err-authentication', 'parsemag', $errmsg, '' ), 'authentication-failed' );
 		}
 	}
 
