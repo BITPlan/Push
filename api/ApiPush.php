@@ -127,12 +127,12 @@ class ApiPush extends ApiBase {
 		if ( !is_null( $token ) ) {
 			$requestData['lgtoken'] = $token;
 		}
-
 		$req = PushFunctions::getHttpRequest( $target,
 			array(
 				'postData' => $requestData,
 				'method' => 'POST',
-				'timeout' => 'default'
+				'timeout' => 'default',
+				'caInfo' => ini_get('curl.cainfo')
 			)
 		);
 

@@ -148,10 +148,11 @@ final class PushFunctions {
 	 * @return (MW)HttpRequest
 	 */
 	public static function getHttpRequest( $target, $args ) {
-		return call_user_func_array(
+		$req=call_user_func_array(
 			array( ( class_exists( 'MWHttpRequest' ) ? 'MWHttpRequest' : 'HttpRequest' ), 'factory' ),
 			array( $target, $args )
 		);
+		return $req;
 	}
 	
 }
