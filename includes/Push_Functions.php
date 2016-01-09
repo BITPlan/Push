@@ -158,7 +158,7 @@ final class PushFunctions {
 			array( ( class_exists( 'MWHttpRequest' ) ? 'MWHttpRequest' : 'HttpRequest' ), 'factory' ),
 			array( $target, $args )
 		);
-		// return the request - this is an independen line to allow setting a breakpoint here to inspect things
+		// return the request instance - this is an independent line to allow setting a breakpoint here to inspect things
 		return $req;
 	}
 	
