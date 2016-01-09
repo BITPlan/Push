@@ -131,8 +131,7 @@ class ApiPush extends ApiBase {
 			array(
 				'postData' => $requestData,
 				'method' => 'POST',
-				'timeout' => 'default',
-				'caInfo' => ini_get('curl.cainfo')
+				'timeout' => 'default'
 			)
 		);
 
