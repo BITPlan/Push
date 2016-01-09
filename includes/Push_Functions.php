@@ -148,10 +148,18 @@ final class PushFunctions {
 	 * @return (MW)HttpRequest
 	 */
 	public static function getHttpRequest( $target, $args ) {
-		return call_user_func_array(
+		// to avoid http-curl-error:SSL certificate problem: unable to get local issuer certificate
+		// we might need to set the CA Information for curl to make http://curl.haxx.se/docs/sslcerts.html
+		// SSL Server certificate handling work properly especially if self-signed certifcates are used
+		// see e.g. http://stackoverflow.com/questions/2694787/how-can-i-set-curlopt-cainfo-globally-for-php-on-windows
+		$args['caInfo'] = ini_get('curl.cainfo');
+		// the a HttpRequest instance depending on MW version
+		$req=call_user_func_array(
 			array( ( class_exists( 'MWHttpRequest' ) ? 'MWHttpRequest' : 'HttpRequest' ), 'factory' ),
 			array( $target, $args )
 		);
+		// return the request instance - this is an independent line to allow setting a breakpoint here to inspect things
+		return $req;
 	}
 	
 }
